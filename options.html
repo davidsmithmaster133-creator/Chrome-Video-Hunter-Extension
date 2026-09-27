@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VideoHunter Pro Settings</title>
+<style>
+:root{color-scheme:light;--page:#f3f5f7;--surface:#fff;--text:#20242a;--muted:#68717d;--line:#d9dee5;--accent:#2468e8;--danger:#b42318}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--text);font:14px/1.45 "Segoe UI",sans-serif}
+body.dark{color-scheme:dark;--page:#17191d;--surface:#202329;--text:#edf0f4;--muted:#a0a8b4;--line:#393e47;--accent:#76a2ff;--danger:#ff8e85}
+main{width:min(760px,100%);margin:0 auto;padding:36px 24px 52px}
+header{padding-bottom:22px;border-bottom:1px solid var(--line)}
+.eyebrow{margin:0 0 6px;color:var(--accent);font-size:11px;font-weight:700;text-transform:uppercase}
+h1{margin:0;font-size:26px;font-weight:650}
+.subtitle{margin:7px 0 0;color:var(--muted)}
+form{display:grid;gap:14px;margin-top:20px}
+section{padding:18px 0;border-bottom:1px solid var(--line)}
+h2{margin:0 0 4px;font-size:15px}
+.section-note{margin:0 0 14px;color:var(--muted);font-size:12px}
+.setting{display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:42px}
+.setting + .setting{margin-top:8px}
+.setting-copy{min-width:0}
+.setting-title{display:block;font-weight:600}
+.setting-description{display:block;color:var(--muted);font-size:12px}
+select,input[type=text]{width:min(260px,48%);min-height:36px;padding:7px 9px;border:1px solid var(--line);border-radius:5px;background:var(--surface);color:var(--text);font:inherit}
+.checks{display:flex;flex-wrap:wrap;gap:10px 22px}
+.check{display:flex;align-items:center;gap:8px;min-height:32px;cursor:pointer}
+input[type=checkbox]{width:16px;height:16px;margin:0;accent-color:var(--accent)}
+.format-group + .format-group{margin-top:18px}
+.format-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 8px}
+.format-heading h3{margin:0;font-size:13px}
+.format-actions{display:flex;gap:5px}
+.format-actions button{min-height:28px;padding:0 9px;font-size:11px}
+.format-options{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px}
+.format-option{display:flex;align-items:center;gap:7px;min-height:34px;padding:5px 8px;border:1px solid var(--line);border-radius:4px;background:var(--surface);cursor:pointer}
+.format-option span{font-size:12px}
+.actions{display:flex;align-items:center;gap:12px;padding-top:4px}
+button{min-height:38px;padding:0 16px;border:1px solid var(--line);border-radius:5px;background:var(--surface);color:var(--text);font:inherit;font-weight:600;cursor:pointer}
+button.primary{border-color:var(--accent);background:var(--accent);color:white}
+button:hover{filter:brightness(.96)}
+#status{min-height:20px;color:var(--muted);font-size:12px}
+#status.error{color:var(--danger)}
+@media(max-width:560px){main{padding:24px 16px 36px}.setting{align-items:flex-start;flex-direction:column;gap:8px}select,input[type=text]{width:100%}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="eyebrow">VideoHunter Pro</p>
+    <h1>Settings</h1>
+    <p class="subtitle">Set how media is detected, shown, and saved.</p>
+  </header>
+  <form id="settingsForm">
+    <section>
+      <h2>Appearance and badge</h2>
+      <p class="section-note">Choose the popup theme and toolbar indicator.</p>
+      <label class="setting" for="theme">
+        <span class="setting-copy"><span class="setting-title">Theme</span><span class="setting-description">Controls the popup and this page.</span></span>
+        <select id="theme"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select>
+      </label>
+      <label class="setting" for="badgeMode">
+        <span class="setting-copy"><span class="setting-title">Toolbar badge</span><span class="setting-description">Choose what appears on the extension icon.</span></span>
+        <select id="badgeMode"><option value="count">Detected count</option><option value="dot">Indicator dot</option><option value="hidden">Hidden</option></select>
+      </label>
+    </section>
+    <section>
+      <h2>Media detection</h2>
+      <p class="section-note">Choose which categories and file formats the extension detects.</p>
+      <div class="checks">
+        <label class="check"><input id="mediaVideo" type="checkbox"> Videos and streams</label>
+        <label class="check"><input id="mediaAudio" type="checkbox"> Audio</label>
+        <label class="check"><input id="mediaImage" type="checkbox"> Images</label>
+      </div>
+      <div id="formatGroups"></div>
+    </section>
+    <section>
+      <h2>Popup defaults</h2>
+      <p class="section-note">Set the initial view when you open the popup.</p>
+      <label class="setting" for="defaultType">
+        <span class="setting-copy"><span class="setting-title">Media filter</span><span class="setting-description">Initial category shown in the list.</span></span>
+        <select id="defaultType"><option value="all">All media</option><option value="video">Videos</option><option value="audio">Audio</option><option value="thumbnail">Images</option><option value="stream">Streams</option></select>
+      </label>
+      <label class="setting" for="minimumSize">
+        <span class="setting-copy"><span class="setting-title">Minimum file size</span><span class="setting-description">Enter a size such as 10KB, 750MB, or 10GB. Leave blank for any size.</span></span>
+        <input id="minimumSize" type="text" inputmode="decimal" maxlength="24" placeholder="Any size (e.g. 10GB)" autocomplete="off">
+      </label>
+      <label class="check"><input id="directOnly" type="checkbox"> Show direct media links only</label>
+    </section>
+    <section>
+      <h2>Downloads</h2>
+      <p class="section-note">Choose a folder inside your browser's Downloads folder. Leave empty to use its root.</p>
+      <label class="setting" for="downloadFolder">
+        <span class="setting-copy"><span class="setting-title">Folder name</span><span class="setting-description">Subfolders are allowed.</span></span>
+        <input id="downloadFolder" type="text" maxlength="120" placeholder="VideoHunter">
+      </label>
+    </section>
+    <div class="actions">
+      <button class="primary" type="submit">Save settings</button>
+      <button id="resetButton" type="button">Reset defaults</button>
+      <span id="status" role="status" aria-live="polite"></span>
+    </div>
+  </form>
+</main>
+<script src="media-formats.js"></script>
+<script src="size-utils.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

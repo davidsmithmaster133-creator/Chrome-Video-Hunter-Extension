@@ -1,0 +1,25 @@
+﻿{
+  "manifest_version": 3,
+  "name": "VideoHunter Pro",
+  "version": "1.0.9",
+  "description": "Detects ALL video links on ANY site - DOM, scripts, network, 9xBuddy.",
+  "permissions": [
+    "activeTab","scripting","clipboardWrite","storage","tabs",
+    "downloads","webRequest","contextMenus"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "VideoHunter Pro",
+    "default_icon": { "16": "icon.png", "48": "icon.png", "128": "icon.png" }
+  },
+  "icons": { "16": "icon.png", "48": "icon.png", "128": "icon.png" },
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["media-formats.js", "streaming-sites.js", "content.js"],
+    "run_at": "document_end",
+    "all_frames": true
+  }]
+}
